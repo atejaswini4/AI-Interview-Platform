@@ -146,7 +146,7 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://localhost:8080/api/users/register",
+        "http://ai-interview-platform-uav9.onrender.com/api/users/register",
         {
           method: "POST",
           headers: {
@@ -197,7 +197,7 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://localhost:8080/api/users/login",
+        "http://ai-interview-platform-uav9.onrender.com/api/users/login",
         {
           method: "POST",
           headers: {
@@ -324,7 +324,7 @@ function App() {
       });
 
       const response = await fetch(
-        "http://localhost:8080/api/ai/generate-questions",
+        "http://ai-interview-platform-uav9.onrender.com/api/ai/generate-questions",
         {
           method: "POST",
           headers: {
@@ -632,7 +632,7 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://localhost:8080/api/users/leaderboard"
+        "http://ai-interview-platform-uav9.onrender.com/api/users/leaderboard"
       );
 
       const data =
@@ -674,7 +674,7 @@ function App() {
     try {
 
       const response = await fetch(
-        `http://localhost:8080/api/tests/user/${loggedInUser.id}`
+        `http://ai-interview-platform-uav9.onrender.com/api/tests/user/${loggedInUser.id}`
       );
 
       if (!response.ok) {
@@ -741,7 +741,7 @@ function App() {
     try {
 
       await fetch(
-        "http://localhost:8080/api/tests/submit",
+        "http://ai-interview-platform-uav9.onrender.com/api/tests/submit",
         {
           method: "POST",
           headers: {
@@ -795,7 +795,7 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://localhost:8080/api/ai/feedback",
+        "http://ai-interview-platform-uav9.onrender.com/api/ai/feedback",
         {
           method: "POST",
           headers: {
@@ -863,7 +863,7 @@ function App() {
     try {
 
       const response = await fetch(
-        "http://localhost:8080/api/ai/feedback",
+        "http://ai-interview-platform-uav9.onrender.com/api/ai/feedback",
         {
           method: "POST",
           headers: {
@@ -967,7 +967,7 @@ function App() {
       try {
 
         const response = await fetch(
-          `http://localhost:8080/api/users/${loggedInUser.id}/practice-result`,
+          `http://ai-interview-platform-uav9.onrender.com/api/users/${loggedInUser.id}/practice-result`,
           {
             method: "POST",
             headers: {
@@ -1083,7 +1083,7 @@ function App() {
       });
 
       const response = await fetch(
-        "http://localhost:8080/api/ai/generate-questions",
+        "http://ai-interview-platform-uav9.onrender.com/api/ai/generate-questions",
         {
           method: "POST",
           headers: {
@@ -1427,7 +1427,7 @@ function App() {
     try {
 
       const response = await fetch(
-        `http://localhost:8080/api/users/${loggedInUser.id}/mock-result`,
+        `http://ai-interview-platform-uav9.onrender.com/api/users/${loggedInUser.id}/mock-result`,
         {
           method: "POST",
           headers: {
