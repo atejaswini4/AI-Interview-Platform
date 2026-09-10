@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import "./App.css";
+import "./PracticeResults.css";
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
   const [showHistory, setShowHistory] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
   const [showAiFeedback, setShowAiFeedback] = useState(false);
+  const [showPracticeResults, setShowPracticeResults] = useState(false);
 
   // =========================================================
   // LOGIN / REGISTER
@@ -43,6 +45,7 @@ function App() {
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [score, setScore] = useState(0);
   const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [practiceAnswers, setPracticeAnswers] = useState([]);
 
   const [aiFeedback, setAiFeedback] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
@@ -108,6 +111,7 @@ function App() {
     setShowHistory(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
 
     setMessage("");
   };
@@ -129,6 +133,7 @@ function App() {
     setShowHistory(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
 
     setMessage("");
   };
@@ -229,6 +234,7 @@ function App() {
       setShowHistory(false);
       setShowProfile(false);
       setShowAiFeedback(false);
+    setShowPracticeResults(false);
 
       setMessage("");
 
@@ -259,6 +265,7 @@ function App() {
     setShowHistory(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
 
     setEmail("");
     setPassword("");
@@ -287,12 +294,14 @@ function App() {
     setShowHistory(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
 
     setCurrentQuestion(0);
     setSelectedAnswer("");
     setScore(0);
     setCorrectAnswers(0);
     setPracticeQuestions([]);
+    setPracticeAnswers([]);
 
     setAiFeedback("");
     setAiLoading(false);
@@ -311,6 +320,7 @@ function App() {
     setSelectedAnswer("");
     setScore(0);
     setCorrectAnswers(0);
+    setPracticeAnswers([]);
 
     try {
 
@@ -583,6 +593,7 @@ function App() {
       setSelectedAnswer("");
       setScore(0);
       setCorrectAnswers(0);
+      setPracticeAnswers([]);
 
       setAiFeedback("");
       setAiLoading(false);
@@ -625,6 +636,7 @@ function App() {
     setShowHistory(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
 
     setShowLeaderboard(true);
     setLeaderboardLoading(true);
@@ -666,6 +678,7 @@ function App() {
     setShowMockResults(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
 
     setShowHistory(true);
     setHistoryLoading(true);
@@ -720,6 +733,7 @@ function App() {
     setShowMockResults(false);
     setShowHistory(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
 
     setShowProfile(true);
   };
@@ -927,6 +941,34 @@ function App() {
 
     const question =
       practiceQuestions[currentQuestion];
+      const selectedAnswerText =
+  question[`option${selectedAnswer}`];
+
+const correctAnswerText =
+  question[`option${question.correctAnswer}`];
+
+const answerRecord = {
+  questionId: question.id,
+  question: question.questionText,
+
+  selectedAnswer: selectedAnswer,
+  selectedAnswerText: selectedAnswerText,
+
+  correctAnswer: question.correctAnswer,
+  correctAnswerText: correctAnswerText,
+
+  topic: question.topic,
+
+  isCorrect:
+    selectedAnswer === question.correctAnswer
+};
+
+const updatedPracticeAnswers = [
+  ...practiceAnswers,
+  answerRecord
+];
+
+setPracticeAnswers(updatedPracticeAnswers);
 
     let newScore =
       score;
@@ -1019,7 +1061,8 @@ function App() {
         );
 
       setShowPractice(false);
-      setShowAiFeedback(true);
+      setShowAiFeedback(false);
+      setShowPracticeResults(true);
 
       getAIFeedback(
         total,
@@ -1052,6 +1095,7 @@ function App() {
     setShowHistory(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
     setShowMockResults(false);
     setShowMockInterview(true);
 
@@ -1635,27 +1679,39 @@ function App() {
         mockCurrentQuestion
       ];
 
-    const answerRecord = {
+    const selectedAnswerText =
+  question[`option${mockSelectedAnswer}`];
 
-      questionId:
-        question.id,
+const correctAnswerText =
+  question[`option${question.correctAnswer}`];
 
-      question:
-        question.questionText,
+const answerRecord = {
 
-      selectedAnswer:
-        mockSelectedAnswer,
+  questionId:
+    question.id,
 
-      correctAnswer:
-        question.correctAnswer,
+  question:
+    question.questionText,
 
-      topic:
-        question.topic,
+  selectedAnswer:
+    mockSelectedAnswer,
 
-      isCorrect:
-        mockSelectedAnswer ===
-        question.correctAnswer
-    };
+  selectedAnswerText:
+    selectedAnswerText,
+
+  correctAnswer:
+    question.correctAnswer,
+
+  correctAnswerText:
+    correctAnswerText,
+
+  topic:
+    question.topic,
+
+  isCorrect:
+    mockSelectedAnswer ===
+    question.correctAnswer
+};
 
     const updatedAnswers = [
       ...mockAnswers,
@@ -1728,6 +1784,7 @@ function App() {
   const backFromAiFeedback = () => {
 
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
     setShowPractice(false);
     setShowDashboard(true);
 
@@ -1752,6 +1809,7 @@ function App() {
     setShowHistory(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
   };
 
   // =========================================================
@@ -1780,6 +1838,7 @@ function App() {
     setShowHistory(false);
     setShowProfile(false);
     setShowAiFeedback(false);
+    setShowPracticeResults(false);
     setShowMockResults(false);
     setShowMockInterview(true);
   };
@@ -1808,25 +1867,44 @@ function App() {
   };
 
   // =========================================================
-  // AI FEEDBACK PAGE
+  // PRACTICE RESULTS PAGE
   // =========================================================
 
-  if (showAiFeedback) {
+  if (showPracticeResults) {
+    const total = practiceQuestions.length;
+
+    const percentage =
+      total > 0
+        ? Math.round((correctAnswers / total) * 100)
+        : 0;
+
+    const wrongAnswers = total - correctAnswers;
+    const maxScore = total * 10;
+
+    let performanceTitle = "Keep Practicing!";
+    let performanceText =
+      "Keep practicing and focus on the topics where you made mistakes.";
+
+    if (percentage >= 80) {
+      performanceTitle = "Excellent Performance!";
+      performanceText =
+        "Great work! You have a strong understanding of the concepts tested.";
+    } else if (percentage >= 60) {
+      performanceTitle = "Good Performance!";
+      performanceText =
+        "You have a good foundation. A little more practice can improve your accuracy.";
+    }
 
     return (
-
-      <div className="dashboard">
-
+      <div className="dashboard practice-results-page">
         <nav className="navbar">
-
           <div className="logo">
             AI Interview Prep
           </div>
 
           <div className="nav-links">
-
             <span
-              onClick={backFromAiFeedback}
+              onClick={backToDashboard}
               style={{ cursor: "pointer" }}
             >
               Dashboard
@@ -1859,7 +1937,6 @@ function App() {
             >
               Profile
             </span>
-
           </div>
 
           <button
@@ -1868,77 +1945,220 @@ function App() {
           >
             Logout
           </button>
-
         </nav>
 
-        <div className="dashboard-content">
+        <div className="practice-results-content">
 
-          <h1>
-            🎯 Practice Test Completed!
-          </h1>
+          {/* HERO */}
+          <div className="practice-results-hero">
+            <div className="practice-results-hero-text">
+              <span className="practice-results-eyebrow">
+                PRACTICE SESSION COMPLETED
+              </span>
+              <h1>🎯 Your Practice Results</h1>
+              <p>
+                Review your answers, understand your performance and keep improving.
+              </p>
+            </div>
 
-          <div className="practice-card">
+           <div
+  className="practice-score-ring"
+  style={{ "--score-angle": `${percentage * 3.6}deg` }}
+>
+              <div className="practice-score-inner">
+                <strong>{percentage}%</strong>
+                <span>Score</span>
+              </div>
+            </div>
+          </div>
 
-            <h2>
-              🤖 AI Performance Feedback
-            </h2>
+          {/* SESSION DETAILS */}
+          <div className="practice-result-details">
+            <div className="practice-result-detail">
+              <span>🏢</span>
+              <div>
+                <small>Company</small>
+                <strong>{selectedCompany}</strong>
+              </div>
+            </div>
+
+            <div className="practice-result-detail">
+              <span>💼</span>
+              <div>
+                <small>Role</small>
+                <strong>{selectedRole}</strong>
+              </div>
+            </div>
+
+            <div className="practice-result-detail">
+              <span>📈</span>
+              <div>
+                <small>Difficulty</small>
+                <strong>{selectedDifficulty}</strong>
+              </div>
+            </div>
+
+            <div className="practice-result-detail">
+              <span>📝</span>
+              <div>
+                <small>Questions</small>
+                <strong>{total}</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* SUMMARY */}
+          <div className="practice-result-summary">
+            <div className="practice-summary-card score-card">
+              <div className="practice-summary-icon">🎯</div>
+              <strong>{score}/{maxScore}</strong>
+              <span>Score</span>
+            </div>
+
+            <div className="practice-summary-card correct-card">
+              <div className="practice-summary-icon">✓</div>
+              <strong>{correctAnswers}</strong>
+              <span>Correct</span>
+            </div>
+
+            <div className="practice-summary-card wrong-card">
+              <div className="practice-summary-icon">×</div>
+              <strong>{wrongAnswers}</strong>
+              <span>Wrong</span>
+            </div>
+
+            <div className="practice-summary-card xp-card">
+              <div className="practice-summary-icon">⭐</div>
+              <strong>{score}</strong>
+              <span>XP Earned</span>
+            </div>
+          </div>
+
+          {/* PERFORMANCE MESSAGE */}
+          <div className="practice-performance-message">
+            <div className="practice-performance-icon">
+              {percentage >= 80 ? "🌟" : percentage >= 60 ? "👍" : "💪"}
+            </div>
+            <div>
+              <h2>{performanceTitle}</h2>
+              <p>{performanceText}</p>
+            </div>
+          </div>
+
+          {/* ANSWER REVIEW */}
+          <section className="practice-answer-section">
+            <div className="practice-section-heading">
+              <div>
+                <span className="practice-section-label">REVIEW</span>
+                <h2>📝 Question & Answer Review</h2>
+                <p>See exactly what you answered and what the correct answer was.</p>
+              </div>
+              <span className="practice-review-count">
+                {practiceAnswers.length} / {total} reviewed
+              </span>
+            </div>
+
+            <div className="practice-answer-list">
+              {practiceAnswers.length === 0 ? (
+                <div className="practice-empty-review">
+                  No answer details are available for this session.
+                </div>
+              ) : (
+                practiceAnswers.map((answer, index) => (
+                  <div
+                    className={`practice-answer-card ${
+                      answer.isCorrect ? "answer-correct" : "answer-wrong"
+                    }`}
+                    key={`${answer.questionId || index}-${index}`}
+                  >
+                    <div className="practice-answer-card-top">
+                      <div className="practice-question-number">
+                        <span>{String(index + 1).padStart(2, "0")}</span>
+                        <div>
+                          <small>QUESTION {index + 1}</small>
+                          {answer.topic && (
+                            <em>{answer.topic}</em>
+                          )}
+                        </div>
+                      </div>
+
+                      <span className={`practice-status ${answer.isCorrect ? "correct" : "wrong"}`}>
+                        {answer.isCorrect ? "✓ Correct" : "× Incorrect"}
+                      </span>
+                    </div>
+
+                    <h3>{answer.question}</h3>
+
+                    <div className="practice-answer-grid">
+                      <div className={`practice-answer-box ${answer.isCorrect ? "selected-correct" : "selected-wrong"}`}>
+                        <span>Your Answer</span>
+                        <strong>
+                          {answer.selectedAnswerText || "Not answered"}
+                        </strong>
+                      </div>
+
+                      <div className="practice-answer-box correct-answer-box">
+                        <span>Correct Answer</span>
+                        <strong>{answer.correctAnswerText}</strong>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </section>
+
+          {/* AI FEEDBACK */}
+          <section className="practice-ai-section">
+            <div className="practice-ai-heading">
+              <div className="practice-ai-icon">🤖</div>
+              <div>
+                <span className="practice-section-label">AI COACH</span>
+                <h2>Personalized AI Feedback</h2>
+                <p>Gemini analyzed your practice performance.</p>
+              </div>
+            </div>
 
             {aiLoading ? (
-
-              <div>
-
-                <h3>
-                  Gemini is analyzing your performance...
-                </h3>
-
-                <p>
-                  ⏳ Please wait while AI prepares
-                  personalized feedback.
-                </p>
-
+              <div className="practice-ai-loading">
+                <div className="practice-loading-spinner"></div>
+                <h3>Analyzing your performance...</h3>
+                <p>Gemini is preparing personalized feedback for you.</p>
               </div>
-
             ) : (
-
-              <div>
-
-                <h3>
-                  Your Personalized Feedback
-                </h3>
-
-                <div
-                  style={{
-                    background: "#f8f9fc",
-                    padding: "25px",
-                    borderRadius: "15px",
-                    marginTop: "20px",
-                    lineHeight: "1.7",
-                    whiteSpace: "pre-wrap"
-                  }}
-                >
-                  {aiFeedback}
-                </div>
-
-                <button
-                  className="primary-btn"
-                  onClick={backFromAiFeedback}
-                  style={{
-                    marginTop: "25px"
-                  }}
-                >
-                  ← Back to Dashboard
-                </button>
-
+              <div className="practice-ai-feedback">
+                {aiFeedback ||
+                  "AI feedback will appear here after analysis."}
               </div>
-
             )}
+          </section>
 
+          {/* ACTIONS */}
+          <div className="practice-result-actions">
+            <button
+              className="primary-btn practice-result-primary"
+              onClick={startPractice}
+            >
+              🔄 Try Again
+            </button>
+
+            <button
+              className="secondary-btn"
+              onClick={backToDashboard}
+            >
+              🏠 Back to Dashboard
+            </button>
+
+            <button
+              className="secondary-btn"
+              onClick={loadHistory}
+            >
+              📊 View History
+            </button>
           </div>
 
         </div>
-
       </div>
-
     );
   }
 
@@ -2404,19 +2624,19 @@ function App() {
                       </p>
 
                       <p>
-                        <strong>
-                          Your Answer:
-                        </strong>{" "}
-                        {answer.selectedAnswer ||
-                          "Not answered"}
-                      </p>
+  <strong>
+    Your Answer:
+  </strong>{" "}
+  {answer.selectedAnswerText ||
+    "Not answered"}
+</p>
 
-                      <p>
-                        <strong>
-                          Correct Answer:
-                        </strong>{" "}
-                        {answer.correctAnswer}
-                      </p>
+<p>
+  <strong>
+    Correct Answer:
+  </strong>{" "}
+  {answer.correctAnswerText}
+</p>
 
                       {answer.topic && (
 
@@ -3748,146 +3968,144 @@ function App() {
   // =========================================================
   // PERFORMANCE HISTORY
   // =========================================================
+if (showHistory) {
+  const averageScore = testHistory.length
+    ? Math.round(
+        testHistory.reduce(
+          (sum, test) => sum + (test.score || 0),
+          0
+        ) / testHistory.length
+      )
+    : 0;
 
-  if (showHistory) {
+  const bestScore = testHistory.length
+    ? Math.max(
+        ...testHistory.map(test => test.score || 0)
+      )
+    : 0;
 
-    return (
+  return (
+    <div className="dashboard">
+      <nav className="navbar">
+        <div className="logo">
+          <span>AI</span> Interview
+        </div>
 
-      <div className="dashboard">
-
-        <nav className="navbar">
-
-          <div className="logo">
-            AI Interview Prep
-          </div>
-
-          <div className="nav-links">
-
-            <span
-              onClick={backToDashboard}
-              style={{ cursor: "pointer" }}
-            >
-              Dashboard
-            </span>
-
-            <span
-              onClick={startPractice}
-              style={{ cursor: "pointer" }}
-            >
-              Practice
-            </span>
-
-            <span>
-              Performance
-            </span>
-
-            <span
-              onClick={loadLeaderboard}
-              style={{ cursor: "pointer" }}
-            >
-              Leaderboard
-            </span>
-
-            <span
-              onClick={openProfile}
-              style={{ cursor: "pointer" }}
-            >
-              Profile
-            </span>
-
-          </div>
-
-          <button
-            className="login-btn"
-            onClick={handleLogout}
-          >
-            Logout
+        <div className="nav-links">
+          <button onClick={() => setShowHistory(false)}>
+            Dashboard
           </button>
+        </div>
+      </nav>
 
-        </nav>
+      <div className="history-page-content">
 
-        <div className="dashboard-content">
+        <div className="history-hero">
+          <div>
+            <h1>Performance History</h1>
+            <p>
+              Track your interview performance and improvement
+              over time.
+            </p>
+          </div>
 
-          <h1>
-            📊 Performance History
-          </h1>
+          <div className="history-icon">
+            📊
+          </div>
+        </div>
 
-          {historyLoading ? (
+        {historyLoading ? (
+          <div className="history-summary-card">
+            <p>Loading history...</p>
+          </div>
+        ) : historyError ? (
+          <div className="history-summary-card">
+            <p>{historyError}</p>
+          </div>
+        ) : testHistory.length === 0 ? (
+          <div className="history-summary-card">
+            <div className="history-summary-icon">
+              📋
+            </div>
+
+            <h2>No Interview History</h2>
 
             <p>
-              Loading history...
+              Complete a practice test or mock interview
+              to see your performance here.
             </p>
+          </div>
+        ) : (
+          <>
+            <div className="history-summary-card">
 
-          ) : historyError ? (
+              <div className="history-summary-item">
+                <div className="history-summary-icon">
+                  📝
+                </div>
+                <div>
+                  <h3>{testHistory.length}</h3>
+                  <p>Total Tests</p>
+                </div>
+              </div>
 
-            <p>
-              {historyError}
-            </p>
+              <div className="history-summary-item">
+                <div className="history-summary-icon">
+                  📈
+                </div>
+                <div>
+                  <h3>{averageScore}%</h3>
+                  <p>Average Score</p>
+                </div>
+              </div>
 
-          ) : testHistory.length === 0 ? (
+              <div className="history-summary-item">
+                <div className="history-summary-icon">
+                  🏆
+                </div>
+                <div>
+                  <h3>{bestScore}%</h3>
+                  <p>Best Score</p>
+                </div>
+              </div>
 
-            <p>
-              No interview history found.
-            </p>
+            </div>
 
-          ) : (
+            <div className="history-table-card">
 
-            <div>
+              <div className="history-table-header">
+                <h2>Test History</h2>
+                <span>
+                  {testHistory.length} attempts
+                </span>
+              </div>
 
-              <h2>
-                Total Tests:{" "}
-                {testHistory.length}
-              </h2>
+              <div className="history-table-wrapper">
+                <table className="history-table">
 
-              <table>
+                  <thead>
+                    <tr>
+                      <th>Company</th>
+                      <th>Role</th>
+                      <th>Questions</th>
+                      <th>Correct</th>
+                      <th>Score</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
 
-                <thead>
-
-                  <tr>
-
-                    <th>
-                      Company
-                    </th>
-
-                    <th>
-                      Role
-                    </th>
-
-                    <th>
-                      Questions
-                    </th>
-
-                    <th>
-                      Correct
-                    </th>
-
-                    <th>
-                      Score
-                    </th>
-
-                    <th>
-                      Date
-                    </th>
-
-                  </tr>
-
-                </thead>
-
-                <tbody>
-
-                  {testHistory.map(
-                    test => (
-
-                      <tr
-                        key={test.id}
-                      >
+                  <tbody>
+                    {testHistory.map(test => (
+                      <tr key={test.id}>
 
                         <td>
-                          {test.company}
+                          <strong>
+                            {test.company || "Mixed"}
+                          </strong>
                         </td>
 
                         <td>
-                          {test.jobRole}
+                          {test.jobRole || "Interview"}
                         </td>
 
                         <td>
@@ -3896,41 +4114,40 @@ function App() {
 
                         <td>
                           {test.correctAnswers}
+                          {" / "}
+                          {test.totalQuestions}
                         </td>
 
                         <td>
-                          {test.score}%
+                          <span className="history-score">
+                            {test.score}%
+                          </span>
                         </td>
 
                         <td>
-
                           {test.testDate
                             ? new Date(
                                 test.testDate
                               ).toLocaleDateString()
                             : "-"}
-
                         </td>
 
                       </tr>
+                    ))}
+                  </tbody>
 
-                    )
-                  )}
-
-                </tbody>
-
-              </table>
+                </table>
+              </div>
 
             </div>
-
-          )}
-
-        </div>
+          </>
+        )}
 
       </div>
+    </div>
+  );
+}
 
-    );
-  }
 
   // =========================================================
   // DASHBOARD

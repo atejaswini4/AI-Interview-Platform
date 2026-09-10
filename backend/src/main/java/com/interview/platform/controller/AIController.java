@@ -104,7 +104,8 @@ public class AIController {
 
 
             // Safety limit
-            if (count != 10 &&
+            if (count != 5 &&
+                count != 10 &&
                 count != 15 &&
                 count != 20) {
 
@@ -112,7 +113,7 @@ public class AIController {
                         .badRequest()
                         .body(Map.of(
                                 "error",
-                                "Question count must be 10, 15, or 20"
+                                "Question count must be 5, 10, 15, or 20"
                         ));
             }
 
